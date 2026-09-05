@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Hollow Creek Farm</title>
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <div id="app">
+      <canvas id="scene-canvas"></canvas>
+      <div id="ui-root" aria-live="polite"></div>
+      <div id="boot-screen">
+        <div class="boot-card">
+          <div class="boot-title">Hollow Creek Farm</div>
+          <div class="boot-sub">warming up the tractor…</div>
+          <div class="boot-bar"><div class="boot-bar-fill" id="boot-bar-fill"></div></div>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

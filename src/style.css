@@ -1,0 +1,411 @@
+:root {
+  --ink: #1c1b16;
+  --parchment: #f3ecd8;
+  --barn-red: #7a2e2e;
+  --moss: #4f7a4a;
+  --amber: #d99a3d;
+  --panel-bg: rgba(20, 18, 12, 0.82);
+  --panel-border: rgba(243, 236, 216, 0.18);
+  font-family: "Georgia", "Iowan Old Style", serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  background: #0d0f08;
+  color: var(--parchment);
+}
+
+#app {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+}
+
+#scene-canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+  cursor: crosshair;
+}
+
+#ui-root {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  font-size: 15px;
+}
+
+#ui-root button {
+  pointer-events: auto;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Boot screen                                                             */
+/* ---------------------------------------------------------------------- */
+
+#boot-screen {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(ellipse at center, #2a3620 0%, #0d0f08 100%);
+  z-index: 50;
+  transition: opacity 0.6s ease;
+}
+
+#boot-screen.boot-screen-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.boot-card {
+  text-align: center;
+  color: var(--parchment);
+}
+
+.boot-title {
+  font-size: 2.4rem;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.4rem;
+}
+
+.boot-sub {
+  opacity: 0.7;
+  margin-bottom: 1.2rem;
+  font-style: italic;
+}
+
+.boot-bar {
+  width: 260px;
+  height: 8px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.12);
+  overflow: hidden;
+}
+
+.boot-bar-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--amber);
+  transition: width 0.25s ease;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Clock                                                                   */
+/* ---------------------------------------------------------------------- */
+
+.hud-clock {
+  position: absolute;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--panel-bg);
+  border: 1px solid var(--panel-border);
+  border-radius: 10px;
+  padding: 6px 18px;
+  text-align: center;
+  backdrop-filter: blur(4px);
+}
+
+.hud-clock-time {
+  font-size: 1.3rem;
+  letter-spacing: 0.05em;
+}
+
+.hud-clock-meta {
+  font-size: 0.78rem;
+  opacity: 0.85;
+  margin-top: 2px;
+}
+
+.hud-market-tag {
+  color: var(--amber);
+  font-weight: bold;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Interaction prompt                                                      */
+/* ---------------------------------------------------------------------- */
+
+.hud-prompt {
+  position: absolute;
+  bottom: 128px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--panel-bg);
+  border: 1px solid var(--panel-border);
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 0.9rem;
+  transition: opacity 0.25s ease;
+}
+
+.hud-prompt-hidden {
+  opacity: 0;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Hotbar                                                                  */
+/* ---------------------------------------------------------------------- */
+
+.hud-hotbar {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  background: var(--panel-bg);
+  border: 1px solid var(--panel-border);
+  border-radius: 12px;
+  padding: 10px;
+}
+
+.hud-slot {
+  position: relative;
+  width: 64px;
+  height: 72px;
+  border-radius: 8px;
+  border: 2px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.04);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: border-color 0.15s ease, transform 0.1s ease;
+}
+
+.hud-slot:hover {
+  transform: translateY(-2px);
+}
+
+.hud-slot-selected {
+  border-color: var(--amber);
+  box-shadow: 0 0 12px rgba(217, 154, 61, 0.5);
+}
+
+.hud-slot-empty {
+  opacity: 0.35;
+}
+
+.hud-slot-key {
+  position: absolute;
+  top: 3px;
+  left: 5px;
+  font-size: 0.6rem;
+  opacity: 0.6;
+}
+
+.hud-slot-icon {
+  font-size: 1.4rem;
+  line-height: 1;
+}
+
+.hud-slot-label {
+  font-size: 0.55rem;
+  text-align: center;
+  margin-top: 2px;
+  opacity: 0.85;
+  line-height: 1.1;
+}
+
+.hud-slot-qty {
+  position: absolute;
+  bottom: 2px;
+  right: 5px;
+  font-size: 0.65rem;
+  font-weight: bold;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Toast log                                                               */
+/* ---------------------------------------------------------------------- */
+
+.hud-toast-log {
+  position: absolute;
+  top: 84px;
+  right: 16px;
+  width: 280px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.hud-toast {
+  background: var(--panel-bg);
+  border: 1px solid var(--panel-border);
+  border-left: 3px solid var(--amber);
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 0.82rem;
+  opacity: 0;
+  transform: translateX(12px);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.hud-toast-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ---------------------------------------------------------------------- */
+/* Merchant panel                                                          */
+/* ---------------------------------------------------------------------- */
+
+.hud-merchant {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 360px;
+  background: var(--panel-bg);
+  border: 1px solid var(--panel-border);
+  border-radius: 12px;
+  padding: 14px;
+}
+
+.hud-hidden {
+  display: none;
+}
+
+.hud-merchant-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1.05rem;
+  margin-bottom: 10px;
+}
+
+.hud-merchant-coins {
+  color: var(--amber);
+  font-weight: bold;
+}
+
+.hud-merchant-close {
+  background: none;
+  border: none;
+  color: var(--parchment);
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.hud-merchant-offers {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.hud-merchant-offer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  padding: 8px 10px;
+  color: var(--parchment);
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.hud-merchant-offer:hover {
+  border-color: var(--amber);
+}
+
+.hud-merchant-offer:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.hud-merchant-price {
+  color: var(--amber);
+}
+
+.hud-exotic {
+  font-style: italic;
+  color: #d9c1f0;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Compass chip (top-left "MARKET · 37M")                                  */
+/* ---------------------------------------------------------------------- */
+
+.hud-compass {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--panel-bg);
+  border: 1px solid var(--panel-border);
+  border-radius: 10px;
+  padding: 8px 16px 8px 12px;
+  backdrop-filter: blur(4px);
+  transition: opacity 0.3s ease;
+}
+
+.hud-compass-arrow {
+  color: var(--amber);
+  font-size: 1.1rem;
+  transition: transform 0.2s ease-out;
+  display: inline-block;
+}
+
+.hud-compass-title {
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  opacity: 0.75;
+}
+
+.hud-compass-distance {
+  font-size: 0.95rem;
+  font-weight: bold;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Minimap disc (bottom-left)                                              */
+/* ---------------------------------------------------------------------- */
+
+.hud-minimap {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  width: 148px;
+  height: 148px;
+  border-radius: 50%;
+  overflow: visible;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.5));
+}
+
+.hud-minimap canvas {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  display: block;
+}
+
+.hud-minimap-north {
+  position: absolute;
+  top: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.6rem;
+  color: var(--amber);
+  font-weight: bold;
+  background: var(--panel-bg);
+  padding: 1px 4px;
+  border-radius: 4px;
+}

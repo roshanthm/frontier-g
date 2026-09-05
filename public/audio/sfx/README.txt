@@ -1,0 +1,1 @@
+till_soil.mp3, water_pour.mp3, chop_wood.mp3, metal_clink.mp3, harvest_pick.mp3, animal_moo.mp3, animal_bray.mp3, animal_spit.mp3, dog_bark.mp3, fox_yip.mp3, merchant_greet.mp3, coin_purchase.mp3, mud_slip.mp3, thunder_crack.mp3, tantrum_stomp.mp3

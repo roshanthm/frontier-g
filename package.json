@@ -1,0 +1,21 @@
+{
+  "name": "hollow-creek-farm",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Hollow Creek Farm — a realistic-yet-ridiculous agricultural simulation built with Three.js, TypeScript, and Vite.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "three": "^0.169.0"
+  },
+  "devDependencies": {
+    "@types/three": "^0.169.0",
+    "typescript": "^5.6.3",
+    "vite": "^5.4.10"
+  }
+}
